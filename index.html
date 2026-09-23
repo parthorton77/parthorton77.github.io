@@ -129,6 +129,8 @@ h1,h2,h3,h4,p { margin-top: 0; }
 .skill-card h3 { margin: 42px 0 25px; font-size: 1.55rem; }
 .skill-card__items { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 1; }
 .skill-card__items span { padding: 9px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--line); color: #cbd4e4; font-size: .72rem; }
+.skill-card__items span.is-featured { position: relative; border-color: transparent; color: var(--text); }
+.skill-card__items span.is-featured::before { content: ''; position: absolute; inset: -1px; padding: 1px; border-radius: 10px; background: linear-gradient(120deg, var(--cyan), var(--purple)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
 
 /* ---------- stats ---------- */
 .stats { padding-block: 100px; }
@@ -456,6 +458,7 @@ h1,h2,h3,h4,p { margin-top: 0; }
           <span class="skill-card__number">04</span>
           <h3>Workflow</h3>
           <div class="skill-card__items">
+            <span class="is-featured">Claude Code</span>
             <span>Git</span>
             <span>GitHub</span>
             <span>JIRA</span>
@@ -522,6 +525,7 @@ h1,h2,h3,h4,p { margin-top: 0; }
               <span>SCSS</span>
               <span>HTML5</span>
               <span>Git</span>
+              <span>Claude Code</span>
             </div>
           </div>
           <div class="project-card__arrow">↗</div>
