@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parth Patel — Senior UI Developer · Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" />
+<style>
+:root {
+  --paper: #f1ece1;
+  --paper-2: #fbf8f1;
+  --ink: #15171b;
+  --ink-2: #4e525a;
+  --ink-3: #686b72;   /* 4.53:1 on paper — carries the dates and the footer */
+  --rule: rgba(21,23,27,.17);
+  --rule-soft: rgba(21,23,27,.09);
+
+  /* Bright line colours. Rails, dots and stripes only — non-text, where 3:1 is the bar. */
+  --line-design: #d9342b;
+  --line-craft: #df7a26;
+  --line-build: #0b6ab5;
+  --line-ship: #0a8a4e;
+  --line-now: #6b3fa0;
+
+  /* Darker ink variants for anything that is TEXT, or a chip carrying white text.
+     Each verified >= 4.5:1 against both the paper (#f1ece1) and white. */
+  --ink-design: #b52c24;
+  --ink-craft: #8f4e15;
+  --ink-build: #0a5c9c;
+  --ink-ship: #076b39;
+  --ink-now: #5d3690;
+
+  --font: 'Barlow', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --cond: 'Barlow Condensed', 'Barlow', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page { size: A4; margin: 0; }
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+/* Flex column so the footer pins to the bottom of the sheet instead of floating with
+   dead space beneath it. min-height, not height: if the content ever outgrows one A4
+   it must flow onto a second page rather than be silently clipped. */
+body {
+  display: flex;
+  flex-direction: column;
+  width: 794px;
+  min-height: 1123px;
+  margin: 0 auto;
+  padding: 44px 50px 32px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 10.8px;
+  line-height: 1.68;
+}
+
+/* Line tokens — each block reads --stop (graphics) and --txt (type) from its wrapper. */
+.is-design { --stop: var(--line-design); --txt: var(--ink-design); }
+.is-craft  { --stop: var(--line-craft);  --txt: var(--ink-craft); }
+.is-build  { --stop: var(--line-build);  --txt: var(--ink-build); }
+.is-ship   { --stop: var(--line-ship);   --txt: var(--ink-ship); }
+.is-now    { --stop: var(--line-now);    --txt: var(--ink-now); }
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- masthead ---------- */
+.masthead { display: flex; align-items: flex-start; justify-content: space-between; gap: 34px; }
+
+.roundel { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.roundel__ring { position: absolute; left: 50%; top: 50%; z-index: 0; width: 46px; height: 46px; transform: translate(-50%, -50%); border: 8px solid var(--line-design); border-radius: 50%; }
+.roundel__bar { position: relative; z-index: 1; padding: 6px 15px; background: var(--line-build); color: #fff; font-family: var(--cond); font-size: 19px; font-weight: 700; letter-spacing: .15em; line-height: 1.1; text-transform: uppercase; white-space: nowrap; }
+
+.masthead__role { display: flex; align-items: center; gap: 9px; margin-top: 14px; color: var(--ink-2); font-size: 9.6px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+.masthead__role i { display: block; width: 20px; height: 5px; border-radius: 3px; background: var(--line-now); }
+
+.contact { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 4px; color: var(--ink-2); font-size: 9.4px; line-height: 1.25; }
+.contact span { display: inline-flex; align-items: center; gap: 7px; }
+.contact i { display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--paper); border: 2px solid var(--dot, var(--line-build)); }
+
+/* ---------- career route strip ---------- */
+.route-strip { display: flex; flex-wrap: wrap; align-items: center; margin-top: 18px; padding-top: 11px; border-top: 1px solid var(--rule); list-style: none; }
+.route-strip li { position: relative; display: flex; align-items: center; gap: 8px; padding-right: 30px; color: var(--ink-2); font-size: 8.4px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.route-strip li:last-child { padding-right: 0; color: var(--ink); }
+.route-strip li:not(:last-child)::after { content: ''; position: absolute; right: 9px; top: 50%; width: 13px; height: 2.5px; transform: translateY(-50%); border-radius: 2px; background: var(--rule); }
+.route-strip li b { display: block; width: 10px; height: 10px; border-radius: 50%; background: var(--paper); border: 2.8px solid var(--stop); }
+.route-strip li:last-child b { background: var(--stop); }
+
+/* ---------- columns ---------- */
+.sheet { display: grid; grid-template-columns: 424px 236px; gap: 34px; margin-top: 22px; }
+
+.col-heading { display: flex; align-items: center; gap: 9px; color: var(--ink); font-size: 8.6px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
+.col-heading::before { content: ''; display: block; width: 18px; height: 5px; border-radius: 3px; background: var(--line-now); }
+
+/* ---------- profile ---------- */
+.profile { margin-top: 11px; color: var(--ink-2); font-size: 9.9px; line-height: 1.7; }
+
+/* ---------- experience as line 1 ---------- */
+.timeline { position: relative; margin-top: 17px; padding-left: 23px; }
+/* Rail centre (7.45 + 3.5/2 = 9.2) matches the dot centre (0 + 18.4/2 = 9.2). */
+.timeline::before {
+  content: '';
+  position: absolute; left: 7.45px; top: 8px; bottom: 8px; width: 3.5px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--line-now), var(--line-ship) 27%, var(--line-build) 52%, var(--line-craft) 77%, var(--line-design));
+}
+.entry { position: relative; }
+.entry + .entry { margin-top: 17px; }
+.entry::before {
+  content: '';
+  position: absolute; left: -23px; top: 3px; width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--paper); border: 3.2px solid var(--stop);
+}
+.entry.is-current::before { background: var(--stop); border-color: var(--paper); box-shadow: 0 0 0 2.6px var(--stop); }
+.entry__top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+.entry__role { font-family: var(--cond); font-size: 15px; font-weight: 700; letter-spacing: .005em; line-height: 1.15; }
+.entry__years { color: var(--ink-3); font-size: 8.6px; font-weight: 600; letter-spacing: .08em; white-space: nowrap; }
+.entry__company { margin-top: 1px; color: var(--txt); font-size: 9.6px; font-weight: 600; }
+.entry ul { margin-top: 5px; padding-left: 12px; list-style: none; color: var(--ink-2); font-size: 9.6px; line-height: 1.66; }
+.entry li { position: relative; }
+.entry li + li { margin-top: 3px; }
+.entry li::before { content: ''; position: absolute; left: -12px; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: var(--stop); opacity: .55; }
+
+/* ---------- skills as interchange lines ---------- */
+.skills { margin-top: 13px; }
+.sk-group + .sk-group { margin-top: 15px; }
+.sk-group__name { display: inline-block; padding: 3.5px 8px 4px; border-radius: 3px; background: var(--txt); color: #fff; font-size: 7.8px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; line-height: 1.25; }
+/* Rail centre (5 + 2.8/2 = 6.4) matches the dot centre (0 + 12.8/2 = 6.4);
+   labels start at 20px, clearing the dot's right edge by 7px. */
+.sk-rail { position: relative; margin-top: 7px; padding-left: 20px; list-style: none; }
+.sk-rail::before { content: ''; position: absolute; left: 5px; top: 7px; bottom: 7px; width: 2.8px; border-radius: 2px; background: var(--stop); }
+.sk-rail li { position: relative; font-size: 9.4px; font-weight: 500; line-height: 1.78; }
+.sk-rail li::before { content: ''; position: absolute; left: -20px; top: 4.4px; width: 8px; height: 8px; border-radius: 50%; background: var(--paper); border: 2.4px solid var(--stop); }
+.sk-rail li.is-featured { font-weight: 700; }
+.sk-rail li.is-featured::before { background: var(--line-now); border-color: var(--line-now); }
+.sk-rail li.is-featured b { margin-left: 6px; padding: 1px 5px 1.5px; border-radius: 2px; background: var(--line-now); color: #fff; font-size: 6.4px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; vertical-align: 1px; }
+
+/* ---------- selected work as terminals ---------- */
+.work { margin-top: 24px; }
+.term { position: relative; overflow: hidden; margin-top: 11px; padding: 9px 10px 10px 12px; border: 1px solid var(--rule-soft); border-radius: 4px; background: var(--paper-2); }
+.term::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3.5px; background: var(--stop); }
+.term__tag { color: var(--txt); font-size: 7.6px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; line-height: 1.3; }
+.term__name { margin-top: 2px; font-family: var(--cond); font-size: 13px; font-weight: 700; line-height: 1.12; }
+.term__desc { margin-top: 3px; color: var(--ink-2); font-size: 8.5px; line-height: 1.5; }
+
+/* ---------- footer ---------- */
+.footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--rule); color: var(--ink-3); font-size: 8.4px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.legend { display: flex; align-items: center; gap: 14px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { display: block; width: 9px; height: 9px; border-radius: 50%; }
+.legend .k-origin { background: var(--paper); border: 2.5px solid var(--line-design); }
+.legend .k-stop { background: var(--line-build); }
+.legend .k-now { background: var(--line-now); box-shadow: 0 0 0 2px rgba(107,63,160,.3); }
+</style>
+</head>
+<body>
+
+  <header class="masthead">
+    <div>
+      <div class="roundel">
+        <span class="roundel__ring"></span>
+        <h1 class="roundel__bar">Parth Patel</h1>
+      </div>
+      <p class="masthead__role"><i></i>Senior UI Developer</p>
+    </div>
+
+    <div class="contact">
+      <span><i style="--dot: var(--line-build)"></i><a href="mailto:parthorton@yahoo.com">parthorton@yahoo.com</a></span>
+      <span><i style="--dot: var(--line-now)"></i><a href="https://www.linkedin.com/in/parth-patel-471235183/">linkedin.com/in/parth-patel-471235183</a></span>
+      <span><i style="--dot: var(--line-ship)"></i>10 years &middot; Frontend &amp; UI</span>
+    </div>
+  </header>
+
+  <ol class="route-strip">
+    <li class="is-design"><b></b>Graphics</li>
+    <li class="is-craft"><b></b>UI / UX</li>
+    <li class="is-build"><b></b>Frontend</li>
+    <li class="is-now"><b></b>UI Development</li>
+  </ol>
+
+  <main class="sheet">
+
+    <!-- ============ LEFT COLUMN ============ -->
+    <section>
+      <h2 class="col-heading">Profile</h2>
+      <p class="profile">Senior UI Developer with 10 years of experience evolving from graphic and interface design into modern frontend engineering. Combines strong visual judgment with hands-on experience building responsive, reusable and accessible interfaces for financial services, education, assessment, e-commerce and pharmaceutical products.</p>
+
+      <h2 class="col-heading" style="margin-top: 20px">Experience</h2>
+
+      <div class="timeline">
+        <article class="entry is-now is-current">
+          <div class="entry__top">
+            <h3 class="entry__role">Senior UI Developer</h3>
+            <span class="entry__years">2021 &mdash; Present</span>
+          </div>
+          <p class="entry__company">AV Devs &middot; CrossCountry Mortgage</p>
+          <ul>
+            <li>Build dynamic and reusable UI components for financial-services products and mortgage workflows.</li>
+            <li>Collaborate with frontend teams to deliver consistent, maintainable and responsive experiences.</li>
+          </ul>
+        </article>
+
+        <article class="entry is-ship">
+          <div class="entry__top">
+            <h3 class="entry__role">Software Developer</h3>
+            <span class="entry__years">2020 &mdash; 2021</span>
+          </div>
+          <p class="entry__company">Open Eyes Technologies Inc.</p>
+          <ul>
+            <li>Designed and developed software experiences for education, assessment and survey-based products.</li>
+            <li>Created responsive interfaces with React, JavaScript and SCSS.</li>
+          </ul>
+        </article>
+
+        <article class="entry is-build">
+          <div class="entry__top">
+            <h3 class="entry__role">UI Designer &amp; Developer</h3>
+            <span class="entry__years">2019 &mdash; 2020</span>
+          </div>
+          <p class="entry__company">Pxel Perfect</p>
+          <ul>
+            <li>Converted PSD designs into responsive HTML experiences for e-commerce, medical and pharmaceutical domains.</li>
+            <li>Balanced visual accuracy with practical, cross-device frontend implementation.</li>
+          </ul>
+        </article>
+
+        <article class="entry is-craft">
+          <div class="entry__top">
+            <h3 class="entry__role">UI Designer &amp; Developer</h3>
+            <span class="entry__years">2017 &mdash; 2019</span>
+          </div>
+          <p class="entry__company">Webmyne Systems Pvt. Ltd.</p>
+          <ul>
+            <li>Designed interface concepts and developed responsive user interfaces from PSD designs.</li>
+            <li>Applied HTML, CSS, jQuery and JavaScript to build polished web experiences.</li>
+          </ul>
+        </article>
+
+        <article class="entry is-design">
+          <div class="entry__top">
+            <h3 class="entry__role">Graphics &amp; Web Designer</h3>
+            <span class="entry__years">2016 &mdash; 2017</span>
+          </div>
+          <p class="entry__company">Cueserve Inc.</p>
+          <ul>
+            <li>Designed website layouts and visual assets using Adobe Photoshop and Illustrator.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ RIGHT COLUMN ============ -->
+    <section>
+      <h2 class="col-heading">Skills</h2>
+
+      <div class="skills">
+        <div class="sk-group is-build">
+          <h3 class="sk-group__name">Frontend</h3>
+          <ul class="sk-rail">
+            <li>HTML5</li><li>CSS3</li><li>SCSS</li><li>JavaScript</li>
+            <li>TypeScript</li><li>Tailwind CSS</li><li>Bootstrap 5</li>
+          </ul>
+        </div>
+
+        <div class="sk-group is-ship">
+          <h3 class="sk-group__name">Frameworks</h3>
+          <ul class="sk-rail">
+            <li>Vue.js</li><li>React</li>
+          </ul>
+        </div>
+
+        <div class="sk-group is-design">
+          <h3 class="sk-group__name">Design</h3>
+          <ul class="sk-rail">
+            <li>UI Design</li><li>UI/UX</li><li>Photoshop</li><li>Illustrator</li>
+          </ul>
+        </div>
+
+        <div class="sk-group is-craft">
+          <h3 class="sk-group__name">Workflow</h3>
+          <ul class="sk-rail">
+            <li class="is-featured">Claude Code <b>New</b></li>
+            <li>Git</li><li>GitHub</li><li>JIRA</li><li>VS Code</li><li>Liquid</li><li>jQuery</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="col-heading work">Selected work</h2>
+
+      <div class="term is-now">
+        <p class="term__tag">Financial services</p>
+        <h3 class="term__name">CrossCountry Mortgage</h3>
+        <p class="term__desc">Reusable UI development for mortgage and financial-services workflows.</p>
+      </div>
+
+      <div class="term is-craft">
+        <p class="term__tag">Food &amp; beverage</p>
+        <h3 class="term__name">Pinter</h3>
+        <p class="term__desc">Shopify UI development for a food and beverage company.</p>
+      </div>
+
+      <div class="term is-ship">
+        <p class="term__tag">Software</p>
+        <h3 class="term__name">Education &amp; Assessment</h3>
+        <p class="term__desc">Responsive interfaces for education, assessment and survey products.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="legend">
+      <span><i class="k-origin"></i>Origin 2016</span>
+      <span><i class="k-stop"></i>Station</span>
+      <span><i class="k-now"></i>Current</span>
+    </div>
+    <span>Parth Patel &middot; <a href="mailto:parthorton@yahoo.com">parthorton@yahoo.com</a></span>
+  </footer>
+
+</body>
+</html>

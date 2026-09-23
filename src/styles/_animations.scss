@@ -1,0 +1,7 @@
+@keyframes drift { 50% { transform: translate3d(20px, -24px, 0) scale(1.05); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes reverse-spin { to { transform: rotate(-360deg); } }
+@keyframes float { 50% { transform: translateY(-18px); } }
+@keyframes pulse { 50% { opacity: .45; transform: scale(.88); } }
+@keyframes scan { to { transform: translateY(100%); } }
+@keyframes twinkle { 50% { opacity: .35; } }

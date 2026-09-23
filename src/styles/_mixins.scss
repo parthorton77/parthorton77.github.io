@@ -1,0 +1,15 @@
+@mixin container {
+  width: min(calc(100% - 48px), var(--max-width));
+  margin-inline: auto;
+
+  @media (max-width: 640px) {
+    width: min(calc(100% - 32px), var(--max-width));
+  }
+}
+
+@mixin glass {
+  background: rgba(12, 17, 30, .58);
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, .22);
+  backdrop-filter: blur(16px);
+}
