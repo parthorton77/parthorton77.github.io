@@ -18,7 +18,7 @@ export const person = {
   lastName: 'Patel',
   title: 'Senior UI Developer',
   /** Landing-screen title, as specified for the new site. */
-  landingTitle: 'UI Developer',
+  landingTitle: 'UI/UX Dev x AI',
   tagline: 'Designing interfaces. Engineering experiences.',
   /** Headline carried over from the previous portfolio. */
   statement: 'From designing visuals to building experiences.',
