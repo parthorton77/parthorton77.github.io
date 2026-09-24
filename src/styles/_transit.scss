@@ -199,12 +199,42 @@ html[data-service='night'] .tm-service i { background: var(--t-ink-3); box-shado
 .tm-scroll-cue:hover { color: var(--t-ink); }
 
 /* ---------- line 1 (journey) ---------- */
-.tm-route { position: relative; --rail-x: 168px; --p: 0; --rail-top: 0px; --rail-h: 100%; }
-.tm-route__casing { position: absolute; left: var(--rail-x); top: var(--rail-top); width: 8px; height: var(--rail-h); transform: translateX(-50%); border-radius: 99px; background: var(--t-rule); }
-.tm-route__live { position: absolute; left: var(--rail-x); top: var(--rail-top); width: 8px; height: calc(var(--rail-h) * var(--p)); transform: translateX(-50%); border-radius: 99px; background-repeat: no-repeat; background-size: 8px var(--rail-h); background-image: linear-gradient(180deg, var(--line-design), var(--line-craft) 26%, var(--line-build) 52%, var(--line-ship) 76%, var(--line-now)); }
-/* Sits under the station markers, so pulling into a station reads as a train at a platform. */
-.tm-route__train { position: absolute; z-index: 1; left: var(--rail-x); top: calc(var(--rail-top) + var(--rail-h) * var(--p)); width: 17px; height: 32px; transform: translate(-50%, -50%); border-radius: 9px; background: var(--t-ink); box-shadow: 0 7px 18px rgba(0,0,0,.3); }
-.tm-route__train::after { content: ''; position: absolute; left: 50%; bottom: 4px; width: 9px; height: 3px; transform: translateX(-50%); border-radius: 2px; background: var(--t-paper); opacity: .7; }
+/* `--gauge` is the distance between rail centres; the train drawing's wheels are 18 units apart
+   across 24, so `--train-w` stays at gauge × 24/18 and the wheels land on the rails. */
+.tm-route { position: relative; --rail-x: 168px; --p: 0; --rail-top: 0px; --rail-h: 100%; --gauge: 18px; --track-w: 26px; --train-w: 24px; --ride: .5s cubic-bezier(.22,.61,.36,1); }
+
+/* Two 2px rails, drawn as a mask so the same shape serves the idle track and the lit one. */
+$tm-rails: linear-gradient(90deg,
+  transparent calc(50% - var(--gauge) / 2 - 1px), #000 0 calc(50% - var(--gauge) / 2 + 1px),
+  transparent 0 calc(50% + var(--gauge) / 2 - 1px), #000 0 calc(50% + var(--gauge) / 2 + 1px),
+  transparent 0);
+
+/* Sleepers are the element's own background; the rails sit on top of them. */
+.tm-route__casing { position: absolute; left: var(--rail-x); top: var(--rail-top); width: var(--track-w); height: var(--rail-h); transform: translateX(-50%); background: repeating-linear-gradient(180deg, var(--t-rule) 0 3px, transparent 3px 11px); }
+.tm-route__casing::before { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--t-ink) 30%, transparent); -webkit-mask-image: $tm-rails; mask-image: $tm-rails; }
+/* The track already travelled: rails lit in the era colours. */
+.tm-route__live { position: absolute; left: var(--rail-x); top: var(--rail-top); width: var(--track-w); height: calc(var(--rail-h) * var(--p)); transform: translateX(-50%); background-repeat: no-repeat; background-size: var(--track-w) var(--rail-h); background-image: linear-gradient(180deg, var(--line-design), var(--line-craft) 26%, var(--line-build) 52%, var(--line-ship) 76%, var(--line-now)); -webkit-mask-image: $tm-rails; mask-image: $tm-rails; transition: height var(--ride); }
+
+/* Sits under the station markers, so pulling into a station reads as a train at a platform.
+   Positioned with a transform so the eased follow stays on the compositor. */
+.tm-route__train { position: absolute; z-index: 1; left: var(--rail-x); top: var(--rail-top); width: var(--train-w); aspect-ratio: 24 / 56; transform: translate(-50%, calc(var(--rail-h) * var(--p) - 50%)); transition: transform var(--ride); will-change: transform; }
+.tm-train { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 5px 7px rgba(0,0,0,.26)); }
+.tm-route__train.is-moving .tm-train { animation: tm-rumble .3s ease-in-out infinite alternate; }
+
+.tm-train__body { fill: var(--t-ink); }
+.tm-train__roof { fill: var(--train); transition: fill .45s ease; }
+.tm-train__boiler { fill: color-mix(in srgb, var(--t-ink) 80%, var(--t-paper)); }
+.tm-train__chimney { fill: var(--t-ink); stroke: var(--train); stroke-width: 1.2; transition: stroke .45s ease; }
+.tm-train__coupler { fill: var(--t-ink-2); }
+.tm-train__wheel { fill: var(--t-ink); }
+.tm-train__treads { fill: var(--t-paper-2); opacity: .45; animation: tm-tread .22s linear infinite paused; }
+.tm-route__train.is-moving .tm-train__treads { animation-play-state: running; }
+.tm-train__lamp { fill: #f7c948; }
+.tm-train__glow { fill: #f7c948; opacity: .22; transform-box: fill-box; transform-origin: center; animation: tm-lamp 2.8s ease-in-out infinite; }
+.tm-route__train.is-moving .tm-train__glow { animation: none; opacity: .38; }
+.tm-train__steam circle { fill: var(--t-ink-3); opacity: 0; transform-box: fill-box; transform-origin: center; }
+.tm-route__train.is-moving .tm-train__steam circle { animation: tm-steam 1s ease-out infinite; }
+.tm-route__train.is-moving .tm-train__steam circle:nth-child(2) { animation-delay: .5s; }
 
 .tm-stop { display: grid; grid-template-columns: 128px 80px minmax(0, 1fr); align-items: start; padding-bottom: 52px; }
 .tm-stop:last-child { padding-bottom: 0; }
@@ -349,6 +379,16 @@ html[data-theme='transit'] .theme-switch .theme-switch__icon { color: var(--line
   0% { transform: translateX(-100%); }
   100% { transform: translateX(250%); }
 }
+@keyframes tm-tread { to { transform: translateY(2px); } }
+@keyframes tm-rumble { to { transform: translateY(.6px); } }
+@keyframes tm-lamp {
+  0%, 100% { opacity: .14; transform: scale(.85); }
+  50% { opacity: .3; transform: scale(1.1); }
+}
+@keyframes tm-steam {
+  0% { opacity: .3; transform: translateY(0) scale(.6); }
+  100% { opacity: 0; transform: translateY(-16px) scale(1.9); }
+}
 
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
@@ -375,7 +415,7 @@ html[data-theme='transit'] .theme-switch .theme-switch__icon { color: var(--line
 @media (max-width: 900px) {
   .tm-section { padding: 100px 0; }
   .tm-head { margin-bottom: 54px; }
-  .tm-route { --rail-x: 20px; }
+  .tm-route { --rail-x: 20px; --gauge: 14px; --track-w: 21px; --train-w: 19px; }
   .tm-stop { grid-template-columns: 40px minmax(0, 1fr); padding-bottom: 40px; }
   .tm-stop__marker { grid-column: 1; grid-row: 1 / span 2; padding-top: 3px; }
   .tm-stop__marker::after { display: none; }
@@ -420,4 +460,10 @@ html[data-theme='transit'] .theme-switch .theme-switch__icon { color: var(--line
   .tm-pulse,
   .tm-board__live i { animation: none; }
   .tm-stop__card { opacity: 1; transform: none; transition: none; }
+  /* The train still marks your place on the line; it just stops performing. */
+  .tm-route__train, .tm-route__live { transition: none; }
+  .tm-route__train.is-moving .tm-train,
+  .tm-route__train .tm-train__treads,
+  .tm-route__train .tm-train__glow,
+  .tm-route__train.is-moving .tm-train__steam circle { animation: none; }
 }
